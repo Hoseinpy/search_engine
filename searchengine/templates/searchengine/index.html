@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>search</title>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 10%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search</h1>
+    <form action="{% url 'search-page' %}" method="get">
+        <input type="search" name="search" placeholder="search..."> <input type="submit" value="search">
+    </form>
+
+    {% if data %}
+    <p>found {{ count }} in {{ time }}s</p>
+    {% for d in data %}
+    <table>
+        <tr>
+          <th>Rank</th>
+          <th>Site</th>
+        </tr>
+        <tr>
+          <td>{{ d.rank }}</td>
+          <td><a href="{{ d.url }}" target="_blank">{{ d.title }}</a></td>
+        </tr>
+      </table> 
+    <!-- <a href="{{ d.url }}" target="_blank">{{ d.title }}</a> -->
+    <br>
+    {% endfor %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if data.has_previous %}
+            <h4> <a href="?search={{ search }}&?page=1">&laquo; first_page</a><br>
+                <a href="?search={{ search }}&?page={{ data.previous_page_number }}">{{ data.previous_page_number }}</a></h4>
+            {% endif %}
+            <span class="current-page">
+                <h3 class="active">{{ data.number }}</h3>
+            </span>
+            {% if data.has_next %}
+            <h4><a href="?search={{ search }}&?page={{ data.next_page_number }}">{{ data.next_page_number }}</a><br>
+                <a href="?search={{ search }}&?page={{ data.paginator.num_pages }}">last_page &raquo;</a></h4>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+</body>
+</html>
