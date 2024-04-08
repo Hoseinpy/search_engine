@@ -20,16 +20,89 @@
         tr:nth-child(even) {
           background-color: #dddddd;
         }
+        /* Container */
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Input Field */
+        .search-input {
+            width: 300px;
+            height: 40px;
+            padding: 0 20px;
+            font-size: 18px;
+            border: 2px solid #007BFF;
+            border-radius: 20px 0 0 20px;
+            outline: none;
+        }
+
+        /* Button */
+        .search-button {
+            width: 100px;
+            height: 44px;
+            border: none;
+            color: #fff;
+            background-color: #007BFF;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Hover effect on button */
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+          color: black;
+          float: left;
+          padding: 8px 16px;
+          text-decoration: none;
+          border: 1px solid #ddd;
+        }
+
+        .pagination a.active {
+          background-color: #4CAF50;
+          color: white;
+          border: 1px solid #4CAF50;
+        }
+
+        .pagination a:hover:not(.active) {
+          background-color: #ddd;
+        }
+
+        .pagination a:first-child {
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+        }
+
+        .pagination a:last-child {
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+        .current_page {
+          background-color: #4CAF50;
+          color: white;
+          border: 1px solid #4CAF50;
+        }
     </style>
 </head>
 <body>
-    <h1>Search</h1>
-    <form action="{% url 'search-page' %}" method="get">
-        <input type="search" name="search" placeholder="search..."> <input type="submit" value="search">
-    </form>
+  <h1>Search a Site</h1>
+    <div class="search-container">
+      <form action="{% url 'search-page' %}" method="get">
+        <input type="search" name="search" placeholder="search..." class="search-input"> <input type="submit" value="search" class="search-button">
+      </form>
+    </div>
 
     {% if data %}
-    <p>found {{ count }} in {{ time }}s</p>
+    <p>found {{ count }}</p>
     {% for d in data %}
     <table>
         <tr>
@@ -41,18 +114,15 @@
           <td><a href="{{ d.url }}" target="_blank">{{ d.title }}</a></td>
         </tr>
       </table> 
-    <!-- <a href="{{ d.url }}" target="_blank">{{ d.title }}</a> -->
     <br>
     {% endfor %}
     <div class="pagination">
         <span class="step-links">
             {% if data.has_previous %}
             <h4> <a href="?search={{ search }}&?page=1">&laquo; first_page</a><br>
-                <a href="?search={{ search }}&?page={{ data.previous_page_number }}">{{ data.previous_page_number }}</a></h4>
+                <a href="?search={{ search }}&?page={{ data.previous_page_number }}">{{ data.previous_page_number }}</a></h4><br>
             {% endif %}
-            <span class="current-page">
-                <h3 class="active">{{ data.number }}</h3>
-            </span>
+            
             {% if data.has_next %}
             <h4><a href="?search={{ search }}&?page={{ data.next_page_number }}">{{ data.next_page_number }}</a><br>
                 <a href="?search={{ search }}&?page={{ data.paginator.num_pages }}">last_page &raquo;</a></h4>

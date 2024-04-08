@@ -5,24 +5,20 @@ from django.db import connection
 from django.core.paginator import Paginator
 
 
-def search(request):
+def search(request): # add get query time
     if request.method == 'GET':
 
         message = 'no result'
         
         if search_quary := request.GET.get('search'):
             data = Websites.objects.filter(title__contains=search_quary)
-            # for get time of queryset
-            list(data)
-            query_time = sum(float(query['time']) for query in connection.queries)
 
             paginator = Paginator(data, per_page=20)
             page_number = request.GET.get('?page')
             page_obj = paginator.get_page(page_number)
  
-            context = {'data':page_obj, 'count':data.count(), 'time':query_time, 'search':search_quary}
+            context = {'data':page_obj, 'count':data.count(), 'search':search_quary}
             
             return render(request, 'searchengine/index.html', context)
-        
         
         return render(request, 'searchengine/index.html', {'message':message})

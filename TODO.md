@@ -1,0 +1,3 @@
+- [ ] fix mysql
+- [ ] migrate data to mysql db
+- [ ] add data to db
