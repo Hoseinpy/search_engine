@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from .models import Websites
-from django.core.paginator import Paginator
 from django.db import connection
 from django.core.paginator import Paginator
 

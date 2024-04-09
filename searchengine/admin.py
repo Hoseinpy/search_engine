@@ -5,4 +5,4 @@ from import_export.admin import ImportExportActionModelAdmin
 
 @admin.register(Websites)
 class SearchDataAdmin(ImportExportActionModelAdmin):
-    pass
+    list_display = ['id', 'rank', 'title', 'url']
