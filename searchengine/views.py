@@ -4,7 +4,7 @@ from django.db import connection
 from django.core.paginator import Paginator
 
 
-def search(request): # add get query time
+def search(request): # TODO: add get query time
     if request.method == 'GET':
 
         message = 'no result'
